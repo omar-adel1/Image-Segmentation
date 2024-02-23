@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Load the image
-image = cv2.imread('flfl.jpg')
+image = cv2.imread('www.jpg')
 
 # Convert the image from BGR to RGB (OpenCV uses BGR by default)
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -12,14 +12,26 @@ lower_red = np.array([0, 50, 50])
 upper_red = np.array([10, 255, 255])
 
 # Define the range of green color in HSV (expanded ranges)
-lower_green = np.array([35, 50, 50])
-upper_green = np.array([90, 255, 255])
+lower_green = np.array([35, 50, 50])  # Adjusted lower range for green
+upper_green = np.array([90, 255, 255])  # Adjusted upper range for green
 
 # Convert the image to HSV color space
 hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
+# lower mask (0-10)
+lower_red = np.array([0,50,50])
+upper_red = np.array([10,255,255])
+mask_red_0 = cv2.inRange(hsv_image, lower_red, upper_red)
+
+# upper mask (170-180)
+lower_red = np.array([170,50,50])
+upper_red = np.array([180,255,255])
+mask_red_1 = cv2.inRange(hsv_image, lower_red, upper_red)
+
+# join my masks
+mask_red = mask_red_0+mask_red_1
+
 # Threshold the HSV image to get only red and green colors
-mask_red = cv2.inRange(hsv_image, lower_red, upper_red)
 mask_green = cv2.inRange(hsv_image, lower_green, upper_green)
 
 # Find contours for red objects
